@@ -53,7 +53,7 @@ int InitServer()
     serverFD = socket(AF_INET, SOCK_STREAM, 0);
 
     if (serverFD < 0) {
-        printf("socketing failed: %s\n", serverFD);
+        printf("socketing failed: %d\n", serverFD);
         exit(1);
     }
 
@@ -102,9 +102,10 @@ int ProcServer()
     */
 
     if (newSocket < 0) {
-        printf("incoming transmission failure: %s\n" ,newSocket);
+        printf("incoming transmission failure: %d\n" ,newSocket);
         return 1;
     }
+
 
     readStat = read(newSocket, buffer, 1024);
     if (readStat < 1) 
