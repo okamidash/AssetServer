@@ -8,11 +8,13 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <netdb.h>
 #include <string.h>
 #include <unistd.h>
+#include <threads.h>
 
 #include "netutils.h"
 
@@ -57,11 +59,20 @@ int InitServer()
         exit(1);
     }
 
-    int sockOpt = setsockopt(serverFD, SOL_SOCKET,
+    struct timeval to;
+    to.tv_sec = 10;
+    to.tv_usec = 0;
+
+    int sockstat = setsockopt (serverFD, SOL_SOCKET, 
+        SO_RCVTIMEO, &to, sizeof to);
+    sockstat = setsockopt (serverFD, SOL_SOCKET, 
+        SO_SNDTIMEO, &to, sizeof to);
+
+    sockstat = setsockopt(serverFD, SOL_SOCKET,
                 SO_REUSEADDR | SO_REUSEPORT, &opt,
                 sizeof(opt)); 
-    if (sockOpt){
-        printf("socket optioning failed: %d\n", sockOpt);
+    if (sockstat){
+        printf("socket optioning failed: %d\n", sockstat);
         exit(2);
     }
 

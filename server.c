@@ -6,7 +6,7 @@ int main(int argc, char** argv)
     while(1)
     {
         int status = ProcServer();
-        if (status != 0) break;
+        if (status < 0) break;
     }
     KillServer();
     return 0;
