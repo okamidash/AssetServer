@@ -17,6 +17,6 @@ WORKDIR /srv/src
 ENV SERVER="./server"
 
 RUN make
-RUN ${SERVER}
+CMD ${SERVER}
 
 RUN echo "end"
