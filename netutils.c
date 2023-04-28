@@ -1,12 +1,12 @@
 //win-specific impl
 #ifdef _WIN32
-#include <windows.h>
-#include <winsock2.h>
+    #include <windows.h>
+    #include <winsock2.h>
 #else
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <arpa/inet.h>
-#include <netinet/in.h>
+    #include <sys/socket.h>
+    #include <sys/types.h>
+    #include <arpa/inet.h>
+    #include <netinet/in.h>
 #endif
 
 #include <stdlib.h>
@@ -28,6 +28,8 @@ int opt = 1;
 
 int InitServer()
 {
+    printf("Initializing server...");
+
     // mswin specific setup (untested)
 #ifdef _WIN32
     WSADATA wsa;
@@ -94,7 +96,7 @@ int InitServer()
         exit(4);
     }
 
-    printf("server init'd\n");
+    printf(" initialized!\n");
     return 0;
 }
 
@@ -143,11 +145,12 @@ int ProcServer()
 
 int KillServer()
 {
+    printf("Server deinitializing...");
     // closing the connected socket
     close(newSocket);
     // closing the listening socket
     shutdown(serverFD, SHUT_RDWR);
 
-    printf("server de-init'd\n");
+    printf(" deinitialized!\n");
     return 0;
 }
